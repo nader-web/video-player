@@ -1,0 +1,23 @@
+{
+  "name": "video-player",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Video.js 10 player, self-hosted, addressed by ?url=",
+  "scripts": {
+    "dev": "bun server.ts",
+    "vendor": "bun scripts/sync-vendor.ts",
+    "fonts": "bun scripts/sync-fonts.ts",
+    "setup": "bun run vendor && bun run fonts",
+    "build": "bun scripts/build.ts"
+  },
+  "dependencies": {
+    "@videojs/cdn": "10.0.1"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

@@ -1,0 +1,7 @@
+# Normalise to LF in the repository and in checkouts, so a Windows contributor
+# and the Linux deploy runner produce byte-identical output.
+* text=auto eol=lf
+
+# Vendored bundles and fonts are copied verbatim; never touch them.
+vendor/** -text
+*.woff2 binary

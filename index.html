@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>video player</title>
+  <meta name="description" content="A Video.js 10 player addressed by url query parameter.">
+
+  <!-- Everything is same-origin: vendored Video.js, local fonts, local modules.
+       No outbound requests at runtime. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; connect-src 'self'">
+
+  <link rel="stylesheet" href="./styles/app.css">
+
+  <!-- Video.js 10, pinned and vendored from @videojs/cdn. video.css is required:
+       the script injects no styles, and the skin themes only through --media-*. -->
+  <link rel="stylesheet" href="./vendor/videojs/video.css">
+  <script type="module" src="./vendor/videojs/video.js"></script>
+
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">Case study</p>
+      <h1 class="title" id="title">Video player</h1>
+
+      <form class="load" id="load">
+        <label class="visually-hidden" for="source">Video URL</label>
+        <input
+          class="load-input"
+          id="source"
+          name="url"
+          type="text"
+          inputmode="url"
+          spellcheck="false"
+          autocomplete="off"
+          placeholder="/media/clip.mp4  or  https://example.com/clip.mp4"
+        >
+        <button class="load-button" type="submit">Load</button>
+      </form>
+
+      <p class="meta">
+        <span id="meta-kind">—</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span id="meta-duration">—:—</span>
+        <button class="copy" id="copy" type="button">Copy link</button>
+      </p>
+    </header>
+
+    <div class="stage" id="stage" role="region" aria-label="Video player" data-state="loading">
+      <p class="msg" id="msg" hidden></p>
+
+      <!-- Player owns state, skin holds the whole UI, media plays the source. -->
+      <video-player>
+        <video-skin id="skin">
+          <video id="media" playsinline preload="metadata"></video>
+        </video-skin>
+      </video-player>
+    </div>
+
+    <p class="hints">
+      <span>Click the frame, then:</span>
+      <span><kbd>Space</kbd> play / pause</span>
+      <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> seek 5s</span>
+      <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> volume</span>
+      <span><kbd>M</kbd> mute</span>
+      <span><kbd>F</kbd> fullscreen</span>
+      <span><kbd>C</kbd> captions</span>
+    </p>
+  </main>
+</body>
+</html>

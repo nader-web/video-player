@@ -1,0 +1,4 @@
+/* Production CSS entry: skin first, then the app layer.
+   app.css already pulls in fonts.css (generated) and tokens.css. */
+@import url("../vendor/videojs/video.css");
+@import url("./app.css");

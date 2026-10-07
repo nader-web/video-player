@@ -1,0 +1,25 @@
+# Dependencies and generated artifacts — all reproducible from source:
+#   bun install        # dependencies
+#   bun run setup      # vendor the Video.js bundles + the typefaces
+#   bun run build      # bundle the player into dist/
+#
+# Committing them would mean ~590 files per upgrade for ~200 KB of actual payload.
+node_modules/
+
+# Written by `bun run vendor` (copied from node_modules/@videojs/cdn).
+vendor/videojs/
+
+# Written by `bun run fonts` (fetched from Google Fonts, latin subset only).
+vendor/fonts/
+styles/fonts.css
+
+# Build output.
+dist/
+
+.DS_Store
+Thumbs.db
+*.part
+
+# env files — never commit
+.env
+.env.*

@@ -80,7 +80,12 @@ export function wireCopyLink() {
 
   button.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(location.href);
+      // Rebuilt, not copied from the address bar: the bar may hold a raw
+      // unencoded ?url=, while a share link must always be canonical.
+      // Other params (poster, captions, title, start) are preserved.
+      const params = new URLSearchParams(location.search);
+      params.set("url", el("source").value.trim());
+      await copyText(`${location.origin}${location.pathname}?${params}`);
       button.dataset.copied = "";
       button.textContent = "Copied";
     } catch {
@@ -94,4 +99,26 @@ export function wireCopyLink() {
       button.textContent = label;
     }, 1600);
   });
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  // Fallback for insecure contexts, where the Clipboard API does not exist.
+  const area = document.createElement("textarea");
+  area.value = text;
+  area.style.position = "fixed";
+  area.style.opacity = "0";
+  document.body.append(area);
+  area.select();
+
+  if (!document.execCommand("copy")) {
+    area.remove();
+    throw new Error("copy failed");
+  }
+
+  area.remove();
 }
